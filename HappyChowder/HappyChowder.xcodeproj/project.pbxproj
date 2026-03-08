@@ -1,0 +1,637 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02BFE2F1E61DFFE1EE22A126 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = C27CA7C563548AE762711124 /* SocketIO */; };
+		0793FF222A17D982CB7D9423 /* HappyChowderWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DA34D0A097FA975163BE63CB /* HappyChowderWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		082F98D8EA1923C23936F2F1 /* Sodium in Frameworks */ = {isa = PBXBuildFile; productRef = 2B9B1EDA80F8AC9E9FD16C99 /* Sodium */; };
+		0D59E5930673A7B65B63C3DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0F2037AF07914C69038AA24 /* Assets.xcassets */; };
+		131BF0E35D7621DE133BD32A /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DC2BCB1778DEF08DB1A2B4 /* KeychainService.swift */; };
+		20794B53CB27FED4FAA09A9B /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49A2EDD5F2EDF1197AFBAAB /* Message.swift */; };
+		29636D29E1F0F714F542AC94 /* SessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6B50849F6F3535DC6CCE0B /* SessionProtocol.swift */; };
+		3A25A7B64CBF5368F8EEDD9C /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7DEDD20F8B51367D043ADB /* AuthManager.swift */; };
+		4E8F67DE6554404AB0ACD781 /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8462691D8A4BEC497B8B62 /* QRScannerView.swift */; };
+		5107D31194CD3BDDEFCE5D6C /* MarkdownContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066DFC1176A5339BC246D161 /* MarkdownContentView.swift */; };
+		5BDD9539F4580119FA59E459 /* TaskSummaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD40F043604FF528008538AD /* TaskSummaryService.swift */; };
+		5E232728FD329A1574CC33F9 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBBB44C661D98A45D0B5BCA /* ChatView.swift */; };
+		61078EE2F9F6BB969E854295 /* ConnectionConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE8E94FB743574F0365DA9 /* ConnectionConfig.swift */; };
+		62780EF0BED969F4BDE0C97D /* ChatHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A784A5B8F57708260A9F2B /* ChatHeaderView.swift */; };
+		6919B0D204F418BC176EE2B6 /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C90671E7701790A01326536 /* LiveActivityManager.swift */; };
+		730A51F617B8CB7A833C2F43 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153F275AD1BFEF1E73676C7E /* SettingsView.swift */; };
+		7F74462EFCC476AA83537004 /* AgentActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415A21FE152CB1C91280CC6 /* AgentActivity.swift */; };
+		9857CEDD6B2CD95D4342A008 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B83F01D4897C336DA6AD12 /* ChatViewModel.swift */; };
+		9BD7A45A90AA24B9D385A10F /* ThinkingShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F930BC0FC534D64FF6F9A7 /* ThinkingShimmerView.swift */; };
+		B6D7412E2FA004AF4D81660B /* AgentActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2569AB927D32089D521BE12D /* AgentActivityCard.swift */; };
+		BD86D57030068D201579203D /* HappyChowderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAA9D8CAD7ACF53C0D3C30D /* HappyChowderApp.swift */; };
+		BDD522533FA2DC150899D592 /* ActivityStepRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C598071AA96E06AF222B5391 /* ActivityStepRow.swift */; };
+		C6A53DC66B73707CB83C1F57 /* HappySessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1EF7DA772C54F60F9AC5C /* HappySessionService.swift */; };
+		C78B849BDACAB7CB583C3392 /* HappyChowderActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71619448B415BC06DBEBDBC3 /* HappyChowderActivityAttributes.swift */; };
+		C7B7FC86A1E7D2AEE20D16F7 /* SharedStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB608E59D9C0ED8522CC60C /* SharedStorage.swift */; };
+		D5EDFC680DBD2CB74B7DD78D /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B1434B42EA52DFBC540D97 /* LocalStorage.swift */; };
+		E2A2F24D6BFBC1E02B04DA39 /* EncryptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD34ACC0DF0EFDB5FB31B96B /* EncryptionService.swift */; };
+		E3C700BCCC3547E12B7F3589 /* MessageBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EA399843A9489527AA6798 /* MessageBubbleView.swift */; };
+		F1D1ED9F36E73527E86A9AFE /* HappyChowderActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71619448B415BC06DBEBDBC3 /* HappyChowderActivityAttributes.swift */; };
+		F3E41438C4A810F4DDD3F303 /* HappyChowderLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A647E5D332F6C478D38870 /* HappyChowderLiveActivity.swift */; };
+		FE6C2995686C839B24E21337 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E623251EB9D6A7EC6489A52 /* AuthView.swift */; };
+		FFC1B19E6580ADF807F2CA5E /* HappyChowderWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87DC974834B3A5A7C91E1B /* HappyChowderWidgetBundle.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6048A1466A0B382925932A1C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FE776B0F776B8E1B8CB12100 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDDD8B51AC8C9B64D754B9EA;
+			remoteInfo = HappyChowderWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1D74D58B7A258DA58972DF2A /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				0793FF222A17D982CB7D9423 /* HappyChowderWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		01F930BC0FC534D64FF6F9A7 /* ThinkingShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingShimmerView.swift; sourceTree = "<group>"; };
+		066DFC1176A5339BC246D161 /* MarkdownContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownContentView.swift; sourceTree = "<group>"; };
+		153F275AD1BFEF1E73676C7E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		1EBBB44C661D98A45D0B5BCA /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		2569AB927D32089D521BE12D /* AgentActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentActivityCard.swift; sourceTree = "<group>"; };
+		26A784A5B8F57708260A9F2B /* ChatHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatHeaderView.swift; sourceTree = "<group>"; };
+		29BF99FC59ED7338DA298EEB /* HappyChowder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HappyChowder.entitlements; sourceTree = "<group>"; };
+		2E623251EB9D6A7EC6489A52 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		3415A21FE152CB1C91280CC6 /* AgentActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentActivity.swift; sourceTree = "<group>"; };
+		3E1165DD39D2DD800075D2BF /* HappyChowderWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HappyChowderWidget.entitlements; sourceTree = "<group>"; };
+		59A661424D45BF6D5B763F85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		71619448B415BC06DBEBDBC3 /* HappyChowderActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappyChowderActivityAttributes.swift; sourceTree = "<group>"; };
+		71A647E5D332F6C478D38870 /* HappyChowderLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappyChowderLiveActivity.swift; sourceTree = "<group>"; };
+		7C87DC974834B3A5A7C91E1B /* HappyChowderWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappyChowderWidgetBundle.swift; sourceTree = "<group>"; };
+		7C90671E7701790A01326536 /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
+		8D6B50849F6F3535DC6CCE0B /* SessionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionProtocol.swift; sourceTree = "<group>"; };
+		91B1434B42EA52DFBC540D97 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
+		9E8462691D8A4BEC497B8B62 /* QRScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
+		A5B83F01D4897C336DA6AD12 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		AF223214CB2D7993CD0A2906 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		BBB608E59D9C0ED8522CC60C /* SharedStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedStorage.swift; sourceTree = "<group>"; };
+		C4CBE3E7CE7B7087C215A909 /* HappyChowder.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = HappyChowder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C598071AA96E06AF222B5391 /* ActivityStepRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityStepRow.swift; sourceTree = "<group>"; };
+		CD40F043604FF528008538AD /* TaskSummaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSummaryService.swift; sourceTree = "<group>"; };
+		CEAA9D8CAD7ACF53C0D3C30D /* HappyChowderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappyChowderApp.swift; sourceTree = "<group>"; };
+		CED1EF7DA772C54F60F9AC5C /* HappySessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappySessionService.swift; sourceTree = "<group>"; };
+		D6EA399843A9489527AA6798 /* MessageBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubbleView.swift; sourceTree = "<group>"; };
+		D8DC2BCB1778DEF08DB1A2B4 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		DA34D0A097FA975163BE63CB /* HappyChowderWidgetExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = HappyChowderWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFBE8E94FB743574F0365DA9 /* ConnectionConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionConfig.swift; sourceTree = "<group>"; };
+		EE7DEDD20F8B51367D043ADB /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		F0F2037AF07914C69038AA24 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F49A2EDD5F2EDF1197AFBAAB /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		FD34ACC0DF0EFDB5FB31B96B /* EncryptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionService.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4F1772DEC76E2970EC3E4F2D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02BFE2F1E61DFFE1EE22A126 /* SocketIO in Frameworks */,
+				082F98D8EA1923C23936F2F1 /* Sodium in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1C80FDBB641E562C0F919B46 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C4CBE3E7CE7B7087C215A909 /* HappyChowder.app */,
+				DA34D0A097FA975163BE63CB /* HappyChowderWidgetExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3D3F639FBF601C98AD411EBE /* HappyChowderWidget */ = {
+			isa = PBXGroup;
+			children = (
+				71A647E5D332F6C478D38870 /* HappyChowderLiveActivity.swift */,
+				3E1165DD39D2DD800075D2BF /* HappyChowderWidget.entitlements */,
+				7C87DC974834B3A5A7C91E1B /* HappyChowderWidgetBundle.swift */,
+				AF223214CB2D7993CD0A2906 /* Info.plist */,
+			);
+			path = HappyChowderWidget;
+			sourceTree = "<group>";
+		};
+		61A21F269B398D63C70C561B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3415A21FE152CB1C91280CC6 /* AgentActivity.swift */,
+				DFBE8E94FB743574F0365DA9 /* ConnectionConfig.swift */,
+				F49A2EDD5F2EDF1197AFBAAB /* Message.swift */,
+				8D6B50849F6F3535DC6CCE0B /* SessionProtocol.swift */,
+				BBB608E59D9C0ED8522CC60C /* SharedStorage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7A732227A75EFBCCCCC8480A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FD34ACC0DF0EFDB5FB31B96B /* EncryptionService.swift */,
+				CED1EF7DA772C54F60F9AC5C /* HappySessionService.swift */,
+				D8DC2BCB1778DEF08DB1A2B4 /* KeychainService.swift */,
+				7C90671E7701790A01326536 /* LiveActivityManager.swift */,
+				91B1434B42EA52DFBC540D97 /* LocalStorage.swift */,
+				CD40F043604FF528008538AD /* TaskSummaryService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		7C06B13A4D941D6CE7EDFA34 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				71619448B415BC06DBEBDBC3 /* HappyChowderActivityAttributes.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		84EFDE26FA2E95274A63E249 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C598071AA96E06AF222B5391 /* ActivityStepRow.swift */,
+				2569AB927D32089D521BE12D /* AgentActivityCard.swift */,
+				26A784A5B8F57708260A9F2B /* ChatHeaderView.swift */,
+				1EBBB44C661D98A45D0B5BCA /* ChatView.swift */,
+				066DFC1176A5339BC246D161 /* MarkdownContentView.swift */,
+				D6EA399843A9489527AA6798 /* MessageBubbleView.swift */,
+				153F275AD1BFEF1E73676C7E /* SettingsView.swift */,
+				01F930BC0FC534D64FF6F9A7 /* ThinkingShimmerView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		94C13BBC1A7469E0E24403E8 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				EE7DEDD20F8B51367D043ADB /* AuthManager.swift */,
+				2E623251EB9D6A7EC6489A52 /* AuthView.swift */,
+				9E8462691D8A4BEC497B8B62 /* QRScannerView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		B49EB394A19A04DCF315F918 = {
+			isa = PBXGroup;
+			children = (
+				FD2DA3CBF2D261E177D2122D /* HappyChowder */,
+				3D3F639FBF601C98AD411EBE /* HappyChowderWidget */,
+				7C06B13A4D941D6CE7EDFA34 /* Shared */,
+				1C80FDBB641E562C0F919B46 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B7445262F9992C98ED8724A8 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				A5B83F01D4897C336DA6AD12 /* ChatViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		FD2DA3CBF2D261E177D2122D /* HappyChowder */ = {
+			isa = PBXGroup;
+			children = (
+				F0F2037AF07914C69038AA24 /* Assets.xcassets */,
+				29BF99FC59ED7338DA298EEB /* HappyChowder.entitlements */,
+				CEAA9D8CAD7ACF53C0D3C30D /* HappyChowderApp.swift */,
+				59A661424D45BF6D5B763F85 /* Info.plist */,
+				94C13BBC1A7469E0E24403E8 /* Auth */,
+				61A21F269B398D63C70C561B /* Models */,
+				7A732227A75EFBCCCCC8480A /* Services */,
+				B7445262F9992C98ED8724A8 /* ViewModels */,
+				84EFDE26FA2E95274A63E249 /* Views */,
+			);
+			path = HappyChowder;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8A45A6B5A79A60B6A1A8C45F /* HappyChowder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8ED7A27A9C239F051CCA4D9F /* Build configuration list for PBXNativeTarget "HappyChowder" */;
+			buildPhases = (
+				8727F6FDC27B824F0DF95E99 /* Sources */,
+				6FDBDDA10D742DA47FF67910 /* Resources */,
+				4F1772DEC76E2970EC3E4F2D /* Frameworks */,
+				1D74D58B7A258DA58972DF2A /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E88D584FCE56B95D6226C5BA /* PBXTargetDependency */,
+			);
+			name = HappyChowder;
+			packageProductDependencies = (
+				C27CA7C563548AE762711124 /* SocketIO */,
+				2B9B1EDA80F8AC9E9FD16C99 /* Sodium */,
+			);
+			productName = HappyChowder;
+			productReference = C4CBE3E7CE7B7087C215A909 /* HappyChowder.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CDDD8B51AC8C9B64D754B9EA /* HappyChowderWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F18E4111825DB46C27FE4219 /* Build configuration list for PBXNativeTarget "HappyChowderWidgetExtension" */;
+			buildPhases = (
+				20E7FD73F5B2257181937F1E /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HappyChowderWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = HappyChowderWidgetExtension;
+			productReference = DA34D0A097FA975163BE63CB /* HappyChowderWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FE776B0F776B8E1B8CB12100 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					8A45A6B5A79A60B6A1A8C45F = {
+						DevelopmentTeam = "";
+					};
+					CDDD8B51AC8C9B64D754B9EA = {
+						DevelopmentTeam = "";
+					};
+				};
+			};
+			buildConfigurationList = 489C7FF8DB29A8D1AE4AB553 /* Build configuration list for PBXProject "HappyChowder" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = B49EB394A19A04DCF315F918;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D7EB361BDCAB6E2FADE3891F /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
+				F750705CED8E36EE90AAA8FF /* XCRemoteSwiftPackageReference "swift-sodium" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 1C80FDBB641E562C0F919B46 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8A45A6B5A79A60B6A1A8C45F /* HappyChowder */,
+				CDDD8B51AC8C9B64D754B9EA /* HappyChowderWidgetExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6FDBDDA10D742DA47FF67910 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D59E5930673A7B65B63C3DC /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		20E7FD73F5B2257181937F1E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C78B849BDACAB7CB583C3392 /* HappyChowderActivityAttributes.swift in Sources */,
+				F3E41438C4A810F4DDD3F303 /* HappyChowderLiveActivity.swift in Sources */,
+				FFC1B19E6580ADF807F2CA5E /* HappyChowderWidgetBundle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8727F6FDC27B824F0DF95E99 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDD522533FA2DC150899D592 /* ActivityStepRow.swift in Sources */,
+				7F74462EFCC476AA83537004 /* AgentActivity.swift in Sources */,
+				B6D7412E2FA004AF4D81660B /* AgentActivityCard.swift in Sources */,
+				3A25A7B64CBF5368F8EEDD9C /* AuthManager.swift in Sources */,
+				FE6C2995686C839B24E21337 /* AuthView.swift in Sources */,
+				62780EF0BED969F4BDE0C97D /* ChatHeaderView.swift in Sources */,
+				5E232728FD329A1574CC33F9 /* ChatView.swift in Sources */,
+				9857CEDD6B2CD95D4342A008 /* ChatViewModel.swift in Sources */,
+				61078EE2F9F6BB969E854295 /* ConnectionConfig.swift in Sources */,
+				E2A2F24D6BFBC1E02B04DA39 /* EncryptionService.swift in Sources */,
+				F1D1ED9F36E73527E86A9AFE /* HappyChowderActivityAttributes.swift in Sources */,
+				BD86D57030068D201579203D /* HappyChowderApp.swift in Sources */,
+				C6A53DC66B73707CB83C1F57 /* HappySessionService.swift in Sources */,
+				131BF0E35D7621DE133BD32A /* KeychainService.swift in Sources */,
+				6919B0D204F418BC176EE2B6 /* LiveActivityManager.swift in Sources */,
+				D5EDFC680DBD2CB74B7DD78D /* LocalStorage.swift in Sources */,
+				5107D31194CD3BDDEFCE5D6C /* MarkdownContentView.swift in Sources */,
+				20794B53CB27FED4FAA09A9B /* Message.swift in Sources */,
+				E3C700BCCC3547E12B7F3589 /* MessageBubbleView.swift in Sources */,
+				4E8F67DE6554404AB0ACD781 /* QRScannerView.swift in Sources */,
+				29636D29E1F0F714F542AC94 /* SessionProtocol.swift in Sources */,
+				730A51F617B8CB7A833C2F43 /* SettingsView.swift in Sources */,
+				C7B7FC86A1E7D2AEE20D16F7 /* SharedStorage.swift in Sources */,
+				5BDD9539F4580119FA59E459 /* TaskSummaryService.swift in Sources */,
+				9BD7A45A90AA24B9D385A10F /* ThinkingShimmerView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E88D584FCE56B95D6226C5BA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDDD8B51AC8C9B64D754B9EA /* HappyChowderWidgetExtension */;
+			targetProxy = 6048A1466A0B382925932A1C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		132DCCBF7CE980EFB121437E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = HappyChowderWidget/HappyChowderWidget.entitlements;
+				INFOPLIST_FILE = HappyChowderWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.happychowder.app.widget;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		17BC26C894EC831F252D5D52 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		388216CA53F04DC92831554B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = HappyChowder/HappyChowder.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = HappyChowder/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.happychowder.app;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		5BDC77E7C5F178EA77F626E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = HappyChowder/HappyChowder.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = HappyChowder/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.happychowder.app;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		CA370DC2F168527D7FB328E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		E5300E3141A5A479E5BFB354 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = HappyChowderWidget/HappyChowderWidget.entitlements;
+				INFOPLIST_FILE = HappyChowderWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.happychowder.app.widget;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		489C7FF8DB29A8D1AE4AB553 /* Build configuration list for PBXProject "HappyChowder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17BC26C894EC831F252D5D52 /* Debug */,
+				CA370DC2F168527D7FB328E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8ED7A27A9C239F051CCA4D9F /* Build configuration list for PBXNativeTarget "HappyChowder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5BDC77E7C5F178EA77F626E3 /* Debug */,
+				388216CA53F04DC92831554B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F18E4111825DB46C27FE4219 /* Build configuration list for PBXNativeTarget "HappyChowderWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				132DCCBF7CE980EFB121437E /* Debug */,
+				E5300E3141A5A479E5BFB354 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D7EB361BDCAB6E2FADE3891F /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 16.1.1;
+			};
+		};
+		F750705CED8E36EE90AAA8FF /* XCRemoteSwiftPackageReference "swift-sodium" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nicklama/swift-sodium";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2B9B1EDA80F8AC9E9FD16C99 /* Sodium */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F750705CED8E36EE90AAA8FF /* XCRemoteSwiftPackageReference "swift-sodium" */;
+			productName = Sodium;
+		};
+		C27CA7C563548AE762711124 /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D7EB361BDCAB6E2FADE3891F /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
+			productName = SocketIO;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = FE776B0F776B8E1B8CB12100 /* Project object */;
+}
