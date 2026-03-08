@@ -88,6 +88,33 @@ struct ChatView: View {
                 .scrollDismissesKeyboard(.interactively)
             }
 
+            // Permission banner
+            if !viewModel.pendingPermissions.isEmpty {
+                Button {
+                    viewModel.showPermissionSheet = true
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "exclamationmark.shield.fill")
+                            .foregroundStyle(.orange)
+                        Text("\(viewModel.pendingPermissions.count) permission\(viewModel.pendingPermissions.count == 1 ? "" : "s") needed")
+                            .font(.system(size: 14, weight: .medium))
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                    .background(Color.orange.opacity(0.1))
+                }
+            }
+
+            // Quick reply bar (shown when not loading)
+            if !viewModel.isLoading {
+                QuickReplyBar(onSend: { viewModel.sendQuickReply($0) }, isLoading: viewModel.isLoading)
+                    .padding(.top, 4)
+            }
+
             // Input bar
             HStack(spacing: 12) {
                 TextField("Message...", text: $viewModel.inputText, axis: .vertical)
@@ -98,19 +125,31 @@ struct ChatView: View {
                     .background(Color(.systemGray6))
                     .clipShape(RoundedRectangle(cornerRadius: 20))
 
-                Button {
-                    isInputFocused = false
-                    viewModel.send()
-                } label: {
-                    Image(systemName: "arrow.up.circle.fill")
-                        .font(.system(size: 32))
-                        .foregroundStyle(
-                            viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || viewModel.isLoading
-                                ? Color(.systemGray4)
-                                : Color.blue
-                        )
+                if viewModel.isLoading {
+                    // Stop button
+                    Button {
+                        viewModel.cancelTurn()
+                    } label: {
+                        Image(systemName: "stop.circle.fill")
+                            .font(.system(size: 32))
+                            .foregroundStyle(.red)
+                    }
+                } else {
+                    // Send button
+                    Button {
+                        isInputFocused = false
+                        viewModel.send()
+                    } label: {
+                        Image(systemName: "arrow.up.circle.fill")
+                            .font(.system(size: 32))
+                            .foregroundStyle(
+                                viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                                    ? Color(.systemGray4)
+                                    : Color.blue
+                            )
+                    }
+                    .disabled(viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
-                .disabled(viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || viewModel.isLoading)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
@@ -121,8 +160,13 @@ struct ChatView: View {
                 botName: viewModel.botName,
                 isOnline: viewModel.isConnected,
                 taskSummary: viewModel.currentTaskSummary,
+                pendingPermissionCount: viewModel.pendingPermissions.count,
+                totalCost: viewModel.totalCost,
                 onSettingsTapped: { viewModel.showSettings = true },
-                onDebugTapped: { viewModel.showDebugLog = true }
+                onDebugTapped: { viewModel.showDebugLog = true },
+                onSessionsTapped: { viewModel.showSessionsList = true },
+                onCostTapped: { viewModel.showCostDashboard = true },
+                onMetadataTapped: { viewModel.showSessionMetadata = true }
             )
         }
         .navigationBarHidden(true)
@@ -137,9 +181,12 @@ struct ChatView: View {
         .sheet(isPresented: $viewModel.showSettings) {
             SettingsView(
                 isConnected: viewModel.isConnected,
+                machineCount: viewModel.machines.count,
                 onSaveConnection: { viewModel.reconnect() },
                 onClearHistory: { viewModel.clearMessages() },
-                onLogout: { viewModel.logout() }
+                onLogout: { viewModel.logout() },
+                onShowMachines: { viewModel.showMachinesView = true },
+                onShowCosts: { viewModel.showCostDashboard = true }
             )
         }
         .sheet(isPresented: $viewModel.showActivityCard) {
@@ -177,6 +224,35 @@ struct ChatView: View {
                     }
                 }
             }
+        }
+        .sheet(isPresented: $viewModel.showSessionsList) {
+            NavigationStack {
+                SessionsListView(
+                    sessions: viewModel.sessionListItems,
+                    activeSessionId: viewModel.activeSessionId,
+                    onSelect: { viewModel.switchSession(to: $0) }
+                )
+            }
+        }
+        .sheet(isPresented: $viewModel.showPermissionSheet) {
+            PermissionRequestView(
+                requests: viewModel.permissionDisplayItems,
+                onApprove: { viewModel.approvePermission(id: $0) },
+                onDeny: { viewModel.denyPermission(id: $0) }
+            )
+            .presentationDetents([.medium, .large])
+        }
+        .sheet(isPresented: $viewModel.showCostDashboard) {
+            CostTrackingView(
+                totalCost: viewModel.totalCost,
+                sessionCosts: viewModel.costDisplayItems
+            )
+        }
+        .sheet(isPresented: $viewModel.showMachinesView) {
+            MachinesView(machines: viewModel.machineDisplayItems)
+        }
+        .sheet(isPresented: $viewModel.showSessionMetadata) {
+            SessionMetadataView(metadata: viewModel.currentSessionMetadata)
         }
     }
 }

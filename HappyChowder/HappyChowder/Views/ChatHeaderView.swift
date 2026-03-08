@@ -4,14 +4,19 @@ struct ChatHeaderView: View {
     let botName: String
     let isOnline: Bool
     var taskSummary: String?
+    var pendingPermissionCount: Int = 0
+    var totalCost: Double = 0
     var onSettingsTapped: (() -> Void)?
     var onDebugTapped: (() -> Void)?
+    var onSessionsTapped: (() -> Void)?
+    var onCostTapped: (() -> Void)?
+    var onMetadataTapped: (() -> Void)?
 
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 10) {
                 Button {
-                    onSettingsTapped?()
+                    onMetadataTapped?()
                 } label: {
                     HStack(spacing: 10) {
                         Circle()
@@ -48,6 +53,38 @@ struct ChatHeaderView: View {
                 .buttonStyle(.plain)
 
                 Spacer()
+
+                // Cost badge
+                if totalCost > 0 {
+                    Button { onCostTapped?() } label: {
+                        Text(String(format: "$%.2f", totalCost))
+                            .font(.system(size: 12, weight: .medium, design: .monospaced))
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(Capsule().fill(Color(.systemGray6)))
+                    }
+                }
+
+                // Sessions button
+                Button { onSessionsTapped?() } label: {
+                    Image(systemName: "list.bullet")
+                        .font(.system(size: 16))
+                        .foregroundStyle(.gray)
+                }
+
+                // Permission badge
+                if pendingPermissionCount > 0 {
+                    Image(systemName: "exclamationmark.shield.fill")
+                        .font(.system(size: 16))
+                        .foregroundStyle(.orange)
+                        .symbolEffect(.pulse)
+                }
+
+                Button { onSettingsTapped?() } label: {
+                    Image(systemName: "gearshape")
+                        .font(.system(size: 16))
+                        .foregroundStyle(.gray)
+                }
 
                 Button { onDebugTapped?() } label: {
                     Image(systemName: "ant")

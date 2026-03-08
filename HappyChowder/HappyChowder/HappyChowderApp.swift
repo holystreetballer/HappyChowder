@@ -24,7 +24,7 @@ struct RootView: View {
     }
 }
 
-/// Shows the active session chat, or a session picker if multiple are available.
+/// Shows the active session chat.
 struct SessionsRootView: View {
     var body: some View {
         NavigationStack {

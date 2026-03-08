@@ -205,11 +205,27 @@ struct UpdateNewMessage: Codable {
 struct UpdateSession: Codable {
     let t: String
     let id: String
+    let metadata: VersionedEncryptedValue?
+    let agentState: VersionedNullableEncryptedValue?
+}
+
+struct VersionedEncryptedValue: Codable {
+    let version: Int
+    let value: String
+}
+
+struct VersionedNullableEncryptedValue: Codable {
+    let version: Int
+    let value: String?
 }
 
 struct UpdateMachine: Codable {
     let t: String
     let machineId: String
+    let metadata: VersionedEncryptedValue?
+    let daemonState: VersionedEncryptedValue?
+    let active: Bool?
+    let activeAt: Double?
 }
 
 // MARK: - Session List Response
@@ -221,6 +237,127 @@ struct HappySession: Codable, Identifiable {
     let createdAt: Double
     let updatedAt: Double
     let dataEncryptionKey: String?   // base64-encoded encrypted AES key
+    let metadata: String?            // encrypted metadata
+    let metadataVersion: Int?
+    let agentState: String?          // encrypted agent state
+    let agentStateVersion: Int?
+    let seq: Int?
+    let active: Bool?
+    let activeAt: Double?
+}
+
+// MARK: - Session Metadata (decrypted)
+
+struct SessionMetadata: Codable {
+    var path: String?
+    var host: String?
+    var version: String?
+    var name: String?
+    var os: String?
+    var summary: SessionSummaryInfo?
+    var machineId: String?
+    var tools: [String]?
+    var homeDir: String?
+    var flavor: String?
+
+    struct SessionSummaryInfo: Codable {
+        let text: String
+        let updatedAt: Double
+    }
+}
+
+// MARK: - Agent State (for permission requests)
+
+struct AgentState: Codable {
+    var controlledByUser: Bool?
+    var requests: [String: PermissionRequest]?
+    var completedRequests: [String: CompletedPermissionRequest]?
+}
+
+struct PermissionRequest: Codable, Identifiable {
+    var id: String { _id ?? UUID().uuidString }
+    private var _id: String?
+    let tool: String
+    let arguments: AnyCodable?
+    let createdAt: Double
+
+    private enum CodingKeys: String, CodingKey {
+        case tool, arguments, createdAt
+    }
+
+    init(id: String, tool: String, arguments: AnyCodable?, createdAt: Double) {
+        self._id = id
+        self.tool = tool
+        self.arguments = arguments
+        self.createdAt = createdAt
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self._id = nil
+        self.tool = try container.decode(String.self, forKey: .tool)
+        self.arguments = try container.decodeIfPresent(AnyCodable.self, forKey: .arguments)
+        self.createdAt = try container.decode(Double.self, forKey: .createdAt)
+    }
+}
+
+struct CompletedPermissionRequest: Codable {
+    let tool: String
+    let arguments: AnyCodable?
+    let createdAt: Double
+    let completedAt: Double
+    let status: String   // "canceled", "denied", "approved"
+}
+
+// MARK: - Machine Types
+
+struct HappyMachine: Identifiable {
+    let id: String
+    var metadata: MachineMetadata?
+    var daemonState: MachineDaemonState?
+    var active: Bool
+    var activeAt: Double
+    var metadataVersion: Int
+    var daemonStateVersion: Int
+}
+
+struct MachineMetadata: Codable {
+    let host: String
+    let platform: String
+    let happyCliVersion: String
+    let homeDir: String
+    let happyHomeDir: String?
+    let happyLibDir: String?
+}
+
+struct MachineDaemonState: Codable {
+    let status: String    // "running", "shutting-down"
+    let pid: Int?
+    let httpPort: Int?
+    let startedAt: Double?
+}
+
+// MARK: - Machine List Response
+
+struct HappyMachineResponse: Codable, Identifiable {
+    let id: String
+    let metadata: String?            // encrypted
+    let metadataVersion: Int?
+    let daemonState: String?         // encrypted
+    let daemonStateVersion: Int?
+    let dataEncryptionKey: String?
+    let active: Bool?
+    let activeAt: Double?
+}
+
+// MARK: - Usage Tracking
+
+struct UsageEvent {
+    let sessionId: String
+    let key: String
+    let tokens: [String: Double]
+    let cost: [String: Double]
+    let timestamp: Double
 }
 
 // MARK: - AnyCodable helper

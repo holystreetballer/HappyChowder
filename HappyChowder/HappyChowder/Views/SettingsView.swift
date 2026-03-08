@@ -3,9 +3,12 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     var isConnected: Bool = false
+    var machineCount: Int = 0
     var onSaveConnection: (() -> Void)?
     var onClearHistory: (() -> Void)?
     var onLogout: (() -> Void)?
+    var onShowMachines: (() -> Void)?
+    var onShowCosts: (() -> Void)?
 
     var body: some View {
         NavigationStack {
@@ -39,6 +42,53 @@ struct SettingsView: View {
                         }
                     }
                     .buttonStyle(.plain)
+
+                    // Machines card
+                    GlassCard {
+                        Button {
+                            dismiss()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                onShowMachines?()
+                            }
+                        } label: {
+                            HStack(spacing: 12) {
+                                GlassIcon(systemName: "desktopcomputer", size: 32, iconSize: 14)
+                                Text("Machines")
+                                    .font(.system(size: 16))
+                                    .foregroundStyle(.primary)
+                                Spacer()
+                                if machineCount > 0 {
+                                    Text("\(machineCount)")
+                                        .font(.system(size: 14, weight: .medium))
+                                        .foregroundStyle(.secondary)
+                                }
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 13, weight: .medium))
+                                    .foregroundStyle(.tertiary)
+                            }
+                        }
+                    }
+
+                    // Costs card
+                    GlassCard {
+                        Button {
+                            dismiss()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                onShowCosts?()
+                            }
+                        } label: {
+                            HStack(spacing: 12) {
+                                GlassIcon(systemName: "dollarsign.circle", size: 32, iconSize: 14)
+                                Text("Cost Dashboard")
+                                    .font(.system(size: 16))
+                                    .foregroundStyle(.primary)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 13, weight: .medium))
+                                    .foregroundStyle(.tertiary)
+                            }
+                        }
+                    }
 
                     // Developer section
                     VStack(alignment: .leading, spacing: 6) {

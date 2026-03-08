@@ -45,6 +45,7 @@ final class ChatViewModel: HappySessionServiceDelegate {
     private var sessionService: HappySessionService?
     private var encryption: EncryptionService?
 
+    var activeSessionId: String? { sessionService?.activeSessionId }
     var isConfigured: Bool { ConnectionConfig().isConfigured }
 
     // MARK: - Run Generation
@@ -67,6 +68,120 @@ final class ChatViewModel: HappySessionServiceDelegate {
     private var liveActivitySubject: String?
     private var liveActivityCurrentIcon: String?
     private var pastTenseCache: [String: String] = [:]
+
+    // MARK: - Feature: Multi-Session
+
+    var sessions: [HappySession] = []
+    var showSessionsList: Bool = false
+    var sessionMetadataMap: [String: SessionMetadata] = [:]
+
+    var sessionListItems: [SessionListItem] {
+        sessions.map { session in
+            let meta = sessionMetadataMap[session.id]
+            let machineName = meta?.host ?? machines.first(where: { $0.id == session.machineId })?.metadata?.host
+            return SessionListItem(
+                id: session.id,
+                summary: meta?.summary?.text ?? meta?.name ?? session.title,
+                path: meta?.path,
+                machineName: machineName,
+                isActive: session.active ?? false,
+                updatedAt: session.updatedAt,
+                costTotal: sessionCosts[session.id]
+            )
+        }
+    }
+
+    // MARK: - Feature: Permission Requests
+
+    var pendingPermissions: [String: PermissionRequest] = [:]
+    var showPermissionSheet: Bool = false
+
+    var permissionDisplayItems: [PermissionDisplayItem] {
+        pendingPermissions.map { (id, req) in
+            let args = req.arguments?.value as? [String: Any]
+            let desc: String
+            if let path = args?["path"] as? String {
+                desc = path
+            } else if let cmd = args?["command"] as? String {
+                desc = String(cmd.prefix(80))
+            } else {
+                desc = "Requesting permission"
+            }
+            return PermissionDisplayItem(
+                id: id,
+                tool: req.tool,
+                description: desc,
+                args: args,
+                createdAt: Date(timeIntervalSince1970: req.createdAt / 1000)
+            )
+        }
+    }
+
+    // MARK: - Feature: Cost Tracking
+
+    var sessionCosts: [String: Double] = [:]
+    var sessionTokens: [String: (input: Int, output: Int)] = [:]
+    var showCostDashboard: Bool = false
+
+    var totalCost: Double {
+        sessionCosts.values.reduce(0, +)
+    }
+
+    var costDisplayItems: [SessionCostItem] {
+        sessionCosts.compactMap { (sessionId, cost) in
+            let meta = sessionMetadataMap[sessionId]
+            let tokens = sessionTokens[sessionId] ?? (0, 0)
+            return SessionCostItem(
+                id: sessionId,
+                name: meta?.summary?.text ?? meta?.name ?? String(sessionId.prefix(8)),
+                cost: cost,
+                inputTokens: tokens.input,
+                outputTokens: tokens.output
+            )
+        }
+        .sorted { $0.cost > $1.cost }
+    }
+
+    // MARK: - Feature: Machine Status
+
+    var machines: [HappyMachine] = []
+    var showMachinesView: Bool = false
+
+    var machineDisplayItems: [MachineDisplayItem] {
+        machines.map { machine in
+            let sessionCount = sessions.filter { $0.machineId == machine.id }.count
+            return MachineDisplayItem(
+                id: machine.id,
+                host: machine.metadata?.host ?? "Unknown",
+                platform: machine.metadata?.platform ?? "unknown",
+                isOnline: machine.active,
+                daemonStatus: machine.daemonState?.status,
+                cliVersion: machine.metadata?.happyCliVersion,
+                sessionCount: sessionCount,
+                lastActiveAt: machine.activeAt > 0 ? Date(timeIntervalSince1970: machine.activeAt / 1000) : nil
+            )
+        }
+    }
+
+    // MARK: - Feature: Session Metadata
+
+    var showSessionMetadata: Bool = false
+
+    var currentSessionMetadata: SessionMetadataDisplay? {
+        guard let sessionId = sessionService?.activeSessionId,
+              let meta = sessionMetadataMap[sessionId] else { return nil }
+        return SessionMetadataDisplay(
+            name: meta.name,
+            summary: meta.summary?.text,
+            workingDirectory: meta.path,
+            host: meta.host,
+            os: meta.os,
+            version: meta.version,
+            flavor: meta.flavor,
+            tools: meta.tools,
+            machineId: meta.machineId
+        )
+    }
 
     private func shiftThinkingIntent(_ newIntent: String) {
         guard newIntent != liveActivityYellowIntent else { return }
@@ -162,7 +277,9 @@ final class ChatViewModel: HappySessionServiceDelegate {
         logBuffer.removeAll()
     }
 
-    init() {}
+    init() {
+        NotificationManager.shared.requestPermission()
+    }
 
     // MARK: - Actions
 
@@ -211,6 +328,7 @@ final class ChatViewModel: HappySessionServiceDelegate {
                     switch result {
                     case .success(let sessions):
                         self?.log("Fetched \(sessions.count) sessions")
+                        self?.sessions = sessions
                         if let latest = sessions.sorted(by: { $0.updatedAt > $1.updatedAt }).first {
                             do {
                                 try service.setActiveSession(latest)
@@ -224,6 +342,9 @@ final class ChatViewModel: HappySessionServiceDelegate {
                     }
                 }
             }
+
+            // Fetch machines
+            service.fetchMachines()
         } catch {
             log("Encryption init failed: \(error.localizedDescription)")
             showSettings = true
@@ -242,13 +363,19 @@ final class ChatViewModel: HappySessionServiceDelegate {
         log("send() — isConnected=\(isConnected) isLoading=\(isLoading)")
         let text = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty, !isLoading else { return }
+        sendText(text)
+        inputText = ""
+    }
+
+    /// Send a message directly (used by quick replies and the input bar).
+    func sendText(_ text: String) {
+        guard !isLoading || text == "STOP - Please stop what you're doing immediately." else { return }
 
         hasPlayedResponseHaptic = false
         hasReceivedAnyDelta = false
         responseHaptic.prepare()
 
         messages.append(Message(role: .user, content: text))
-        inputText = ""
         isLoading = true
 
         currentActivity = AgentActivity()
@@ -282,6 +409,44 @@ final class ChatViewModel: HappySessionServiceDelegate {
         log("sessionService.sendMessage() called")
     }
 
+    /// Send a quick reply.
+    func sendQuickReply(_ message: String) {
+        guard !isLoading else { return }
+        sendText(message)
+    }
+
+    /// Cancel the current turn.
+    func cancelTurn() {
+        log("cancelTurn()")
+        sessionService?.sendStopMessage()
+    }
+
+    /// Switch to a different session.
+    func switchSession(to sessionId: String) {
+        guard sessionId != sessionService?.activeSessionId else { return }
+        do {
+            messages.removeAll()
+            try sessionService?.switchToSession(id: sessionId)
+            log("Switched to session \(sessionId)")
+        } catch {
+            log("Failed to switch session: \(error.localizedDescription)")
+        }
+    }
+
+    /// Approve a permission request.
+    func approvePermission(id: String) {
+        sessionService?.respondToPermission(requestId: id, decision: "approved")
+        pendingPermissions.removeValue(forKey: id)
+        if pendingPermissions.isEmpty { showPermissionSheet = false }
+    }
+
+    /// Deny a permission request.
+    func denyPermission(id: String) {
+        sessionService?.respondToPermission(requestId: id, decision: "denied")
+        pendingPermissions.removeValue(forKey: id)
+        if pendingPermissions.isEmpty { showPermissionSheet = false }
+    }
+
     func clearMessages() {
         messages.removeAll()
         LocalStorage.deleteMessages()
@@ -294,6 +459,12 @@ final class ChatViewModel: HappySessionServiceDelegate {
         encryption = nil
         isConnected = false
         messages.removeAll()
+        sessions.removeAll()
+        machines.removeAll()
+        sessionCosts.removeAll()
+        sessionTokens.removeAll()
+        pendingPermissions.removeAll()
+        sessionMetadataMap.removeAll()
         LocalStorage.deleteMessages()
         AuthManager.shared.logout()
     }
@@ -390,7 +561,6 @@ final class ChatViewModel: HappySessionServiceDelegate {
     func serviceDidReceiveToolCallEnd(callId: String) {
         log("Tool end: \(callId)")
 
-        // Mark the matching in-progress step as completed
         if let activity = currentActivity {
             for i in activity.steps.indices.reversed() {
                 if activity.steps[i].status == .inProgress && activity.steps[i].type == .toolCall {
@@ -423,11 +593,13 @@ final class ChatViewModel: HappySessionServiceDelegate {
         }
 
         let runGeneration = currentRunGeneration
+        let sessionName = liveActivitySubject
         Task {
             let completionSummary = await generateCompletionSummary()
             await MainActor.run {
                 guard self.currentRunGeneration == runGeneration else { return }
                 LiveActivityManager.shared.endActivity(completionSummary: completionSummary)
+                NotificationManager.shared.notifyTaskComplete(sessionName: sessionName, summary: completionSummary)
             }
         }
 
@@ -456,6 +628,7 @@ final class ChatViewModel: HappySessionServiceDelegate {
         isLoading = false
         currentActivity = nil
         LiveActivityManager.shared.endActivity()
+        NotificationManager.shared.notifyError(sessionName: liveActivitySubject, error: error.localizedDescription)
         LocalStorage.saveMessages(messages)
     }
 
@@ -463,16 +636,67 @@ final class ChatViewModel: HappySessionServiceDelegate {
         log("SVC: \(message)")
     }
 
+    // MARK: - New Delegate Methods
+
+    func serviceDidReceivePermissionRequests(_ requests: [String: PermissionRequest]) {
+        log("Permission requests: \(requests.count)")
+        pendingPermissions = requests
+        if !requests.isEmpty {
+            showPermissionSheet = true
+            // Notify if in background
+            if let first = requests.values.first {
+                NotificationManager.shared.notifyPermissionNeeded(tool: first.tool, sessionName: liveActivitySubject)
+            }
+            let haptic = UINotificationFeedbackGenerator()
+            haptic.notificationOccurred(.warning)
+        }
+    }
+
+    func serviceDidReceiveUsageUpdate(sessionId: String, tokens: [String: Double], cost: [String: Double]) {
+        let totalCost = cost["total"] ?? 0
+        sessionCosts[sessionId] = (sessionCosts[sessionId] ?? 0) + totalCost
+
+        let inputTokens = Int(tokens["input"] ?? 0)
+        let outputTokens = Int(tokens["output"] ?? 0)
+        let existing = sessionTokens[sessionId] ?? (0, 0)
+        sessionTokens[sessionId] = (existing.input + inputTokens, existing.output + outputTokens)
+
+        // Update Live Activity cost
+        if sessionId == sessionService?.activeSessionId {
+            liveActivityCostAccumulator += totalCost
+            liveActivityCost = String(format: "$%.2f", liveActivityCostAccumulator)
+            pushLiveActivityUpdate()
+        }
+    }
+
+    func serviceDidReceiveMachineUpdate(machineId: String, active: Bool, activeAt: Double) {
+        if let idx = machines.firstIndex(where: { $0.id == machineId }) {
+            machines[idx].active = active
+            machines[idx].activeAt = activeAt
+        }
+    }
+
+    func serviceDidReceiveSessionMetadata(_ metadata: SessionMetadata, forSession sessionId: String) {
+        log("Received metadata for session \(sessionId): host=\(metadata.host ?? "?") path=\(metadata.path ?? "?")")
+        sessionMetadataMap[sessionId] = metadata
+    }
+
+    func serviceDidReceiveSessionsList(_ sessions: [HappySession]) {
+        self.sessions = sessions
+    }
+
+    func serviceDidReceiveMachinesList(_ machinesList: [HappyMachine]) {
+        self.machines = machinesList
+    }
+
     // MARK: - Thinking Summary Extraction
 
-    /// Extract a short summary from thinking text for the Live Activity.
     private func extractThinkingSummary(_ text: String) -> String? {
         let cleaned = text
             .replacingOccurrences(of: "**", with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
         guard !cleaned.isEmpty else { return nil }
 
-        // Take the first sentence or first 60 chars
         if let dotIndex = cleaned.firstIndex(of: ".") {
             let sentence = String(cleaned[cleaned.startIndex...dotIndex])
             if sentence.count > 10 && sentence.count < 80 { return sentence }
